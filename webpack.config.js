@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -6,10 +7,11 @@ module.exports = {
         index: './src/index/index.ts',
         util: './src/util/DomBuilder.ts',
         pageOne: './src/1/index.ts',
+        pageTwo: './src/2/index.ts',
         pageThree: './src/3/index.ts'
-      },
+    },
     output: {
-        path: path.resolve(__dirname, 'dist'),  
+        path: path.resolve(__dirname, 'dist'),
         filename: '[name]-bundle.js'
     },
     resolve: {
@@ -22,7 +24,12 @@ module.exports = {
             { test: /\.tsx?$/, loader: 'ts-loader' }
         ]
     },
-    plugins: [new HtmlWebpackPlugin({
-        template: './src/index/index.html'
-    })]
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index/index.html'
+        }),
+        new webpack.ProvidePlugin({
+            ProblemSpace: './src/index/index'
+        })
+    ]
 }
